@@ -62,7 +62,7 @@ trap 'rm "$cookieJar"' EXIT
 loginForm=$(curl -sSL --get --cookie "$cookieJar" --cookie-jar "$cookieJar" \
   --data-urlencode "client_id=${clientId}" \
   --data-urlencode "redirect_uri=$redirectUrl" \
-  --data-urlencode "scope=openid" \
+  --data-urlencode "scope=openid write read" \
   --data-urlencode "response_type=code" \
   --data-urlencode "code_challenge=$(sha256sum "$codeVerifier")" \
   --data-urlencode "code_challenge_method=S256" \
@@ -71,7 +71,6 @@ loginForm=$(curl -sSL --get --cookie "$cookieJar" --cookie-jar "$cookieJar" \
 
 loginForm=${loginForm//\&amp;/\&}
 
-echo loginForm=$loginForm
 
 codeUrl=$(curl -sS --cookie "$cookieJar" --cookie-jar "$cookieJar" \
   --data-urlencode "username=$username" \
@@ -81,8 +80,8 @@ codeUrl=$(curl -sS --cookie "$cookieJar" --cookie-jar "$cookieJar" \
 
 code=${codeUrl##*code=}
 
-#  --data-urlencode "client_secret=newClientSecret" \
 accessToken=$(curl -sS --cookie "$cookieJar" --cookie-jar "$cookieJar" \
+  --data-urlencode "client_secret=newClientSecret" \
   --data-urlencode "client_id=$clientId" \
   --data-urlencode "redirect_uri=$redirectUrl" \
   --data-urlencode "code=$code" \
