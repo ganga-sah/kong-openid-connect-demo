@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Usage: ./authorization_code_login.sh -a http://localhost:8083/auth -r baeldung -c newClient -l http://localhost:8089/ -u mike@other.com
 # Keycloak Authorization Code Flow with Proof Key for Code Exchange (PKCE)
 #
 # Dependencies:
